@@ -1,15 +1,6 @@
-import asyncio
-from iol_api.client import IOLClient
-from iol_api.constants import Mercado
+from iol_utils.iol_requests import IOLRequest
 
+r = IOLRequest("user_data.json")
 
-async def main():
-
-    iol_client = IOLClient("desconfiadotota", "acGh*q9:gW>7u_")
-
-    data = await iol_client.get_titulo("SUPV", Mercado.BCBA)
-
-    print(data)
-
-
-asyncio.run(main())
+data = r.get("MIRG", "bCBA", "2022-01-01", "2022-01-31")
+print(data)

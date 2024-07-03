@@ -38,11 +38,7 @@ class TestToken(unittest.TestCase):
         # Check the result
         self.assertEqual(
             token,
-            {
-                "Accept": "application/json",
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": "Bearer mock_access_token",
-            },
+            "Bearer mock_access_token",
         )
 
     @patch("iol_utils.get_token.requests.post")  # Mock the requests.post method
