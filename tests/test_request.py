@@ -1,7 +1,5 @@
 import unittest
 from unittest.mock import patch, Mock, mock_open
-import json
-import os
 import pandas as pd
 from iol_utils.get_token import Token
 from iol_utils.iol_requests import IOLRequest

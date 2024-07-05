@@ -28,15 +28,24 @@ class IOLRequest:
     def __format_date(self, date_str: str) -> str:
         return datetime.strptime(date_str, "%Y-%m-%d").date().isoformat()
 
-    def get(
-        self, ticker: str, market: str, start_date: str = None, end_date: str = None
-    ) -> json:
-        if start_date:
-            start_date = self.__format_date(start_date)
-        if end_date:
-            end_date = self.__format_date(end_date)
+    def __build_url(
+        self, ticker: str, market: str, start_date: str, end_date: str, adjusted: bool
+    ) -> str:
+        adjusted = "ajustada" if adjusted else "sinAjustar"
+        formatted_start_date = self.__format_date(start_date) if start_date else ""
+        formatted_end_date = self.__format_date(end_date) if end_date else ""
+        return f"{self.__url}/{market}/Titulos/{ticker}/Cotizacion/seriehistorica/{formatted_start_date}/{formatted_end_date}/{adjusted}"
 
-        url = f"{self.__url}/{market}/Titulos/{ticker}/Cotizacion/seriehistorica/{start_date}/{end_date}/ajustada"
+    def get(
+        self,
+        ticker: str,
+        market: str,
+        start_date: str = None,
+        end_date: str = None,
+        adjusted: bool = False,
+    ) -> json:
+
+        url = self.__build_url(ticker, market, start_date, end_date, adjusted)
         response = requests.get(
             url=url,
             headers=self.headers_iol,
